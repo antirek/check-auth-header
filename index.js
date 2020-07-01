@@ -1,22 +1,21 @@
 
 const checkAuthKey = ({
-    authKeys = [],
-    authFn = null,
-    authHeader = 'X-API-KEY',
-    excludes = [],
-    debug = false,
-    status401onFail = false,
-  }) => {
-
+  authKeys = [],
+  authFn = null,
+  authHeader = 'X-API-KEY',
+  excludes = [],
+  debug = false,
+  status401onFail = false,
+}) => {
   const log = (...args) => {
     if (debug) console.log(...args);
   };
-  
+
   const middlewareFn = (req, res, next) => {
     const authKeyValue = req.get(authHeader);
-    log('req.path:', req.path, 
-      ', authHeader:', authHeader,
-      ', authKey:', authKeyValue);
+    log('req.path:', req.path,
+        ', authHeader:', authHeader,
+        ', authKey:', authKeyValue);
 
     if (excludes.indexOf(req.path) !== -1) {
       log('auth not required');

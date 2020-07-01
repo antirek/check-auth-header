@@ -21,7 +21,7 @@ describe('test', () => {
       const headers = {};
       headers[authHeader] = goodKey;
       const request = new MockExpressRequest({headers});
-    
+
       middleware(request, response, (err) => {
         expect(err).toBe(undefined);
         console.log('err', err);
@@ -32,7 +32,7 @@ describe('test', () => {
       const headers = {};
       headers[authHeader] = failKey;
       const request = new MockExpressRequest({headers});
-    
+
       middleware(request, response, (err) => {
         expect(err instanceof Error).toBe(true);
         console.log('err', err);
@@ -42,16 +42,18 @@ describe('test', () => {
 
   describe('with auth function', ()=> {
     const middleware = checkAuthKey({
-      authFn: (key) => {return key === goodKey},
-      authHeader,      
-      debug: true,      
+      authFn: (key) => {
+        return key === goodKey;
+      },
+      authHeader,
+      debug: true,
     });
 
     it('good key', () => {
       const headers = {};
       headers[authHeader] = goodKey;
       const request = new MockExpressRequest({headers});
-    
+
       middleware(request, response, (err) => {
         expect(err).toBe(undefined);
         console.log('err', err);
@@ -62,7 +64,7 @@ describe('test', () => {
       const headers = {};
       headers[authHeader] = failKey;
       const request = new MockExpressRequest({headers});
-    
+
       middleware(request, response, (err) => {
         expect(err instanceof Error).toBe(true);
         console.log('err', err);
@@ -73,17 +75,17 @@ describe('test', () => {
   describe('with exclude path', ()=> {
     const middleware = checkAuthKey({
       authKeys: [goodKey],
-      authHeader,      
+      authHeader,
       debug: true,
-      excludes: ['/v1/api']
+      excludes: ['/v1/api'],
     });
 
     it('good key & excludes', () => {
       const headers = {};
       headers[authHeader] = goodKey;
-      const request = new MockExpressRequest({headers, 
+      const request = new MockExpressRequest({headers,
         url: 'http://localhost:3030/v1/api'});
-    
+
       middleware(request, response, (err) => {
         expect(err).toBe(undefined);
         console.log('err', err);
@@ -93,9 +95,9 @@ describe('test', () => {
     it('good key & !excludes', () => {
       const headers = {};
       headers[authHeader] = goodKey;
-      const request = new MockExpressRequest({headers, 
+      const request = new MockExpressRequest({headers,
         url: 'http://localhost:3030/v2/api'});
-    
+
       middleware(request, response, (err) => {
         expect(err).toBe(undefined);
         console.log('err', err);
@@ -107,7 +109,7 @@ describe('test', () => {
       headers[authHeader] = failKey;
       const request = new MockExpressRequest({headers,
         url: 'http://localhost:3030/v1/api'});
-    
+
       middleware(request, response, (err) => {
         expect(err).toBe(undefined);
         console.log('err', err);
@@ -117,9 +119,9 @@ describe('test', () => {
     it('fail key & !excludes', () => {
       const headers = {};
       headers[authHeader] = failKey;
-      const request = new MockExpressRequest({headers, 
+      const request = new MockExpressRequest({headers,
         url: 'http://localhost:3030/v2/api'});
-    
+
       middleware(request, response, (err) => {
         expect(err instanceof Error).toBe(true);
         console.log('err', err);

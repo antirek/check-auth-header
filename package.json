@@ -4,7 +4,7 @@
   "description": "Middleware for express.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -17,9 +17,21 @@
   },
   "homepage": "https://github.com/antirek/check-auth-header#readme",
   "devDependencies": {
+    "eslint": "^7.3.1",
+    "eslint-config-google": "^0.14.0",
+    "husky": "^4.2.5",
     "jest": "^26.0.1",
+    "lint-staged": "^10.2.11",
     "mock-express-request": "^0.2.2",
     "mock-express-response": "^0.2.2",
     "mock-req-res": "^1.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm test"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
   }
 }
