@@ -13,9 +13,7 @@ const checkAuthKey = ({
 
   const middlewareFn = (req, res, next) => {
     const authKeyValue = req.get(authHeader);
-    log('req.path:', req.path,
-        ', authHeader:', authHeader,
-        ', authKey:', authKeyValue);
+    log({path: req.path, authHeader, authKeyValue});
 
     if (excludes.indexOf(req.path) !== -1) {
       log('auth not required');
@@ -29,12 +27,12 @@ const checkAuthKey = ({
 
     if (authKeys && authKeys.length !== 0) {
       if (authKeys.indexOf(authKeyValue) !== -1) {
-        log('auth verified good', authKeyValue);
+        log('auth verified good', {authKeyValue});
         return next();
       }
     }
 
-    log('Invalid auth key:', authKeyValue);
+    log('Invalid auth key:', {authKeyValue});
 
     if (!status401onFail) {
       return next(new Error('Invalid auth key ' + authKeyValue));

@@ -1,6 +1,6 @@
 # check-auth-header
 
-Middleware for express.js for check key in auth header
+check key in auth header (middleware for express.js)
 
 ## Usage
 
@@ -31,7 +31,6 @@ app.use(checkAuthKey({
 }));
 
 `````
-
 
 ### Exclude path  / for API scheme or readme
 
